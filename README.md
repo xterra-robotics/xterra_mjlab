@@ -7,17 +7,17 @@ robot registry, and train/play tooling built on mjlab and
 
 This release includes the **M2Metal** quadruped on flat terrain.
 
-> **No pretrained policy ships yet.** Train one first (Step 4 below); `play` then
-> uses the checkpoint your run produces. mjlab also exports `policy.onnx`
-> automatically as training checkpoints are saved.
+> A **pretrained flat policy ships** under `checkpoints/m2_metal_flat/`
+> (`m2_metal_flat.pt` for play, `policy.onnx` for deployment). You can `play` it
+> immediately, or train your own. See `MODEL_CARD.md` for provenance and
+> evaluation.
 
 ## Steps at a glance
 
 1. Install mjlab (Prerequisites).
 2. `pip install -e .` (Installation).
 3. `list_envs.py` — confirm the task registers.
-4. `train.py` — train a policy.
-5. `play.py` — visualise your trained policy.
+4. `play.py` — visualise the shipped policy (or train your own with `train.py`).
 
 ## Prerequisites
 
@@ -80,12 +80,14 @@ python scripts/train.py xTerra-Mjlab-Velocity-Flat-M2Metal \
 
 ### 5. Play
 
-Visualise a trained policy (point `--checkpoint-file` at a saved `model_*.pt`):
+Visualise the **shipped** policy:
 
 ```bash
 python scripts/play.py xTerra-Mjlab-Velocity-Flat-M2Metal \
-    --checkpoint-file logs/<run>/model_3000.pt
+    --checkpoint-file checkpoints/m2_metal_flat/m2_metal_flat.pt
 ```
+
+Or point `--checkpoint-file` at a `model_*.pt` from a run you trained.
 
 Test the environment with no policy:
 
