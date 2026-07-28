@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "xterra_mjlab"
+version = "0.1.0"
+description = "xTerra RL Lab (mjlab) — locomotion reinforcement learning on mjlab / MuJoCo-Warp"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "Apache-2.0" }
+authors = [{ name = "xTerra Robotics" }]
+keywords = ["reinforcement-learning", "locomotion", "mjlab", "mujoco", "quadruped", "rsl_rl"]
+
+# mjlab pulls MuJoCo / MuJoCo-Warp / rsl-rl-lib / gymnasium transitively.
+dependencies = [
+  "mjlab>=1.5",
+  "torch>=2.7",
+  "numpy<2.5",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0",
+  "ruff>=0.6",
+]
+
+[tool.setuptools.packages.find]
+include = ["xterra_mjlab*"]
+
+[tool.setuptools.package-data]
+"xterra_mjlab" = [
+  "assets/m2_metal/xml/*.xml",
+  "assets/m2_metal/meshes/*.STL",
+]

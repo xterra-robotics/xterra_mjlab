@@ -1,0 +1,23 @@
+xterra_mjlab
+Copyright 2025-2035 xTerra Robotics
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+--------------------------------------------------------------------------------
+Vendored assets
+--------------------------------------------------------------------------------
+The M2Metal robot description under xterra_mjlab/assets/m2_metal/ (MJCF + STL
+meshes) is authored by xTerra Robotics and released under this repository's
+Apache-2.0 license.
+
+--------------------------------------------------------------------------------
+Third-party dependencies (not redistributed here)
+--------------------------------------------------------------------------------
+This software runs on third-party components that each user installs separately.
+Their licenses are collected under licenses/ for convenience:
+
+  * mjlab — Apache-2.0.
+  * rsl_rl (rsl-rl-lib) — BSD-3-Clause.
+    Copyright (c) 2021-2025, ETH Zurich and NVIDIA CORPORATION & AFFILIATES.
+  * MuJoCo, MuJoCo-Warp, Warp (warp-lang) — Apache-2.0.
+  * PyTorch, Gymnasium, NumPy — BSD / MIT.

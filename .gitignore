@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.eggs/
+
+# Training / eval artifacts
+logs/
+outputs/
+videos/
+wandb/
+runs/
+
+# Editors / OS
+.idea/
+.vscode/
+.DS_Store
+
+# Virtual envs
+.venv/
+venv/
+
+# stray runtime logs
+MUJOCO_LOG.TXT

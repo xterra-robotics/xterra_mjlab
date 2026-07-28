@@ -1,0 +1,12 @@
+MuJoCo, MuJoCo-Warp, and Warp
+
+- MuJoCo (`mujoco`) — Apache-2.0, Copyright (c) DeepMind Technologies Limited.
+  https://github.com/google-deepmind/mujoco/blob/main/LICENSE
+- MuJoCo-Warp (`mujoco-warp`) — Apache-2.0.
+  https://github.com/google-deepmind/mujoco_warp
+- Warp (`warp-lang`) — Apache-2.0, Copyright (c) NVIDIA CORPORATION.
+  https://github.com/NVIDIA/warp/blob/main/LICENSE.md
+
+All three are licensed under the Apache License, Version 2.0, whose full text is
+reproduced in this repository's top-level LICENSE. None are redistributed here;
+each is installed from PyPI as a dependency of `mjlab`.
