@@ -1,6 +1,6 @@
-"""M2Metal actuator for mjlab: delayed PD with a joint<->motor coordinate transform.
+"""SvanM2 actuator for mjlab: delayed PD with a joint<->motor coordinate transform.
 
-The M2Metal leg is a **parallel mechanism**: a belt routes from the thigh
+The SvanM2 leg is a **parallel mechanism**: a belt routes from the thigh
 actuator past the knee to drive the calf, so the calf-motor angle depends on
 both the calf joint *and* the thigh joint. This actuator models that physical
 transmission in simulation: positions/velocities and torques are mapped through
@@ -49,8 +49,8 @@ _STAGE_IDX = {"hip": 0, "thigh": 1, "calf": 2}
 
 
 @dataclass(kw_only=True)
-class M2MetalActuatorCfg(IdealPdActuatorCfg):
-    """Configuration for :class:`M2MetalActuator`.
+class SvanM2ActuatorCfg(IdealPdActuatorCfg):
+    """Configuration for :class:`SvanM2Actuator`.
 
     ``effort_limit`` sizes the MJCF ``<motor>`` forcerange (set it to the max,
     24 N.m); the per-joint clamp used at runtime comes from ``effort_hip`` /
@@ -67,12 +67,12 @@ class M2MetalActuatorCfg(IdealPdActuatorCfg):
     hfe_kfe_trans: float = 0.5
     """Belt coupling: ``motor_calf = gear_calf * (q_calf + hfe_kfe_trans * q_thigh)``."""
 
-    def build(self, entity: "Entity", target_ids: list[int], target_names: list[str]) -> "M2MetalActuator":
-        return M2MetalActuator(self, entity, target_ids, target_names)
+    def build(self, entity: "Entity", target_ids: list[int], target_names: list[str]) -> "SvanM2Actuator":
+        return SvanM2Actuator(self, entity, target_ids, target_names)
 
 
-class M2MetalActuator(IdealPdActuator[M2MetalActuatorCfg]):
-    """Delayed-PD actuator with the M2Metal parallel-mechanism joint<->motor map."""
+class SvanM2Actuator(IdealPdActuator[SvanM2ActuatorCfg]):
+    """Delayed-PD actuator with the SvanM2 parallel-mechanism joint<->motor map."""
 
     def initialize(
         self,
@@ -92,15 +92,15 @@ class M2MetalActuator(IdealPdActuator[M2MetalActuatorCfg]):
             m = _JOINT_NAME_RE.match(name)
             if m is None:
                 raise ValueError(
-                    f"M2MetalActuator: joint {name!r} does not match "
+                    f"SvanM2Actuator: joint {name!r} does not match "
                     "(FL|FR|RL|RR)_(hip|thigh|calf)_joint; all joints in this "
-                    "actuator group must be M2Metal leg joints."
+                    "actuator group must be SvanM2 leg joints."
                 )
             per_leg.setdefault(m.group(1), {})[m.group(2)] = i
         for leg, stages in per_leg.items():
             missing = {"hip", "thigh", "calf"} - stages.keys()
             if missing:
-                raise ValueError(f"M2MetalActuator: leg {leg!r} missing stages {sorted(missing)}.")
+                raise ValueError(f"SvanM2Actuator: leg {leg!r} missing stages {sorted(missing)}.")
 
         gear = self.cfg.gear_ratio
         hk = self.cfg.hfe_kfe_trans

@@ -1,12 +1,12 @@
-# Model card — M2Metal flat velocity policy (mjlab)
+# Model card — SvanM2 flat velocity policy (mjlab)
 
-A velocity-tracking policy for the M2Metal quadruped on flat terrain, shipped
-under `checkpoints/m2_metal_flat/`.
+A velocity-tracking policy for the SvanM2 quadruped on flat terrain, shipped
+under `checkpoints/svanm2_flat/`.
 
 ## Overview
 
-- **Task:** `xTerra-Mjlab-Velocity-Flat-M2Metal` (flat-terrain velocity tracking).
-- **Robot:** M2Metal quadruped, 12 DoF (FL/FR/RL/RR × hip/thigh/calf).
+- **Task:** `xTerra-Mjlab-Velocity-Flat-SvanM2` (flat-terrain velocity tracking).
+- **Robot:** SvanM2 quadruped, 12 DoF (FL/FR/RL/RR × hip/thigh/calf).
 - **Algorithm:** rsl_rl PPO (rsl-rl-lib 5.x) via mjlab's `VelocityOnPolicyRunner`;
   actor/critic MLP `[512, 256, 128]`, ELU, adaptive-KL LR schedule.
 - **Control:** joint-position targets at 50 Hz, per-joint action scale
@@ -27,7 +27,7 @@ under `checkpoints/m2_metal_flat/`.
 
 ## Training
 
-- **Command:** `python scripts/train.py xTerra-Mjlab-Velocity-Flat-M2Metal
+- **Command:** `python scripts/train.py xTerra-Mjlab-Velocity-Flat-SvanM2
   --env.scene.num-envs 4096`
 - **Environments:** 4096. **Iterations:** 3000. **Seed:** 42.
 - **Final mean reward:** 158.3.
@@ -35,11 +35,11 @@ under `checkpoints/m2_metal_flat/`.
   rsl-rl-lib 5.x, PyTorch 2.7.0 (CUDA 12.8), Python 3.11.
 - **Hardware:** 1× NVIDIA RTX PRO 4500 Blackwell (32 GB).
 
-## Artifacts (`checkpoints/m2_metal_flat/`)
+## Artifacts (`checkpoints/svanm2_flat/`)
 
 | File | Purpose | SHA256 |
 |------|---------|--------|
-| `m2_metal_flat.pt` | rsl_rl checkpoint (`play.py --checkpoint-file`) | `8101dbb28b103a47dd2219d97eac395a79819bcfa65acb8e8457a18c1aa1a9d3` |
+| `svanm2_flat.pt` | rsl_rl checkpoint (`play.py --checkpoint-file`) | `8101dbb28b103a47dd2219d97eac395a79819bcfa65acb8e8457a18c1aa1a9d3` |
 | `policy.onnx` | ONNX actor, 270→12 (deployment) | `f13055966f94443206097cd05154c9e717e845f390171e02708280e7d918f5ab` |
 
 ## Evaluation

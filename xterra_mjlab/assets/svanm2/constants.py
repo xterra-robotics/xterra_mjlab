@@ -1,10 +1,10 @@
-"""xTerra M2Metal robot constants and configuration for mjlab.
+"""xTerra SvanM2 robot constants and configuration for mjlab.
 
-M2Metal is a quadruped (FL/FR/RL/RR, uniform ``*_hip/thigh/calf_joint``). Uses
-the vendored ``xml/m2_metal_mjlab.xml`` (adds ``imu_ang_vel`` / ``imu_lin_vel``
+SvanM2 is a quadruped (FL/FR/RL/RR, uniform ``*_hip/thigh/calf_joint``). Uses
+the vendored ``xml/svanm2_mjlab.xml`` (adds ``imu_ang_vel`` / ``imu_lin_vel``
 body-frame sensors so the observation layout matches the rest of the pipeline).
 
-Actuation uses the M2Metal parallel-mechanism actuator (a single group over all
+Actuation uses the SvanM2 parallel-mechanism actuator (a single group over all
 12 leg joints) so simulation reproduces the thigh->calf belt coupling and the
 joint<->motor gain transform of the real drivetrain. Gains kp=20, kd=0.7;
 joint-side effort 12 N.m (hip/thigh) / 24 N.m (calf).
@@ -17,14 +17,14 @@ import mujoco
 from mjlab.entity import EntityArticulationInfoCfg, EntityCfg
 from mjlab.utils.spec_config import CollisionCfg
 
-from xterra_mjlab.actuators import M2MetalActuatorCfg
+from xterra_mjlab.actuators import SvanM2ActuatorCfg
 
-M2_XML: Path = Path(__file__).parent / "xml" / "m2_metal_mjlab.xml"
-assert M2_XML.exists(), f"M2Metal XML not found at {M2_XML}"
+SVANM2_XML: Path = Path(__file__).parent / "xml" / "svanm2_mjlab.xml"
+assert SVANM2_XML.exists(), f"SvanM2 XML not found at {SVANM2_XML}"
 
 
 def get_spec() -> mujoco.MjSpec:
-    return mujoco.MjSpec.from_file(str(M2_XML))
+    return mujoco.MjSpec.from_file(str(SVANM2_XML))
 
 
 STIFFNESS = 20.0
@@ -35,7 +35,7 @@ EFFORT_KNEE = 24.0
 # Single actuator group over all 12 leg joints — required for the per-leg 3x3
 # belt-coupling block to live in one Jacobian. effort_limit sizes the MJCF
 # <motor> forcerange (max); the per-joint clamp comes from effort_hip/knee.
-M2_ACTUATOR_CFG = M2MetalActuatorCfg(
+SVANM2_ACTUATOR_CFG = SvanM2ActuatorCfg(
     target_names_expr=(".*_hip_joint", ".*_thigh_joint", ".*_calf_joint"),
     stiffness=STIFFNESS,
     damping=DAMPING,
@@ -46,7 +46,7 @@ M2_ACTUATOR_CFG = M2MetalActuatorCfg(
     gear_ratio=(8.0, 8.0, 16.0),
     hfe_kfe_trans=0.5,
 )
-M2_ACTUATOR_DELAYED_CFG = M2MetalActuatorCfg(
+SVANM2_ACTUATOR_DELAYED_CFG = SvanM2ActuatorCfg(
     target_names_expr=(".*_hip_joint", ".*_thigh_joint", ".*_calf_joint"),
     stiffness=STIFFNESS,
     damping=DAMPING,
@@ -85,28 +85,28 @@ FULL_COLLISION = CollisionCfg(
     disable_other_geoms=False,
 )
 
-M2_ARTICULATION = EntityArticulationInfoCfg(
-    actuators=(M2_ACTUATOR_CFG,),
+SVANM2_ARTICULATION = EntityArticulationInfoCfg(
+    actuators=(SVANM2_ACTUATOR_CFG,),
     soft_joint_pos_limit_factor=0.9,
 )
-M2_ARTICULATION_DELAYED = EntityArticulationInfoCfg(
-    actuators=(M2_ACTUATOR_DELAYED_CFG,),
+SVANM2_ARTICULATION_DELAYED = EntityArticulationInfoCfg(
+    actuators=(SVANM2_ACTUATOR_DELAYED_CFG,),
     soft_joint_pos_limit_factor=0.9,
 )
 
 
-def get_m2_metal_robot_cfg(delayed: bool = False) -> EntityCfg:
+def get_svanm2_robot_cfg(delayed: bool = False) -> EntityCfg:
     return EntityCfg(
         init_state=INIT_STATE,
         collisions=(FULL_COLLISION,),
         spec_fn=get_spec,
-        articulation=M2_ARTICULATION_DELAYED if delayed else M2_ARTICULATION,
+        articulation=SVANM2_ARTICULATION_DELAYED if delayed else SVANM2_ARTICULATION,
     )
 
 
 # Action scale: mjlab convention 0.25 * effort / kp per joint (effective joint
 # stiffness is kp by the parallel-mechanism gain transform).
-M2_ACTION_SCALE: dict[str, float] = {
+SVANM2_ACTION_SCALE: dict[str, float] = {
     ".*_hip_joint": 0.25 * EFFORT_HIP / STIFFNESS,
     ".*_thigh_joint": 0.25 * EFFORT_HIP / STIFFNESS,
     ".*_calf_joint": 0.25 * EFFORT_KNEE / STIFFNESS,

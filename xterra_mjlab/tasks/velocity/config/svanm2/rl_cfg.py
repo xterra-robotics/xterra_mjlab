@@ -1,4 +1,4 @@
-"""RL configuration for the xTerra M2Metal velocity task (vanilla PPO)."""
+"""RL configuration for the xTerra SvanM2 velocity task (vanilla PPO)."""
 
 from mjlab.rl import (
     RslRlModelCfg,
@@ -39,13 +39,13 @@ _ACTOR_CFG = RslRlModelCfg(
 )
 
 
-def m2_metal_ppo_runner_cfg() -> RslRlOnPolicyRunnerCfg:
+def svanm2_ppo_runner_cfg() -> RslRlOnPolicyRunnerCfg:
     """Standard MLP actor-critic PPO runner."""
     return RslRlOnPolicyRunnerCfg(
         actor=_ACTOR_CFG,
         critic=_CRITIC_CFG,
         algorithm=_PPO_CFG,
-        experiment_name="m2_metal_velocity_flat",
+        experiment_name="svanm2_velocity_flat",
         save_interval=50,
         num_steps_per_env=24,
         max_iterations=3000,

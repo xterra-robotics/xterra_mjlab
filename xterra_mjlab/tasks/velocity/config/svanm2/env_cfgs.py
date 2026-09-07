@@ -1,4 +1,4 @@
-"""xTerra M2Metal velocity environment configurations.
+"""xTerra SvanM2 velocity environment configurations.
 
 45-dim actor observation, base_lin_vel-last critic layout. Foot geoms/sites are
 ``*_foot``; leg bodies are ``*_thigh_link`` / ``*_shank_link``. Illegal-contact
@@ -29,10 +29,10 @@ from mjlab.tasks.velocity.mdp import UniformVelocityCommandCfg
 from mjlab.tasks.velocity.velocity_env_cfg import make_velocity_env_cfg
 from mjlab.utils.noise import UniformNoiseCfg as Unoise
 
-from xterra_mjlab.assets.m2_metal import get_m2_metal_robot_cfg, M2_ACTION_SCALE
+from xterra_mjlab.assets.svanm2 import get_svanm2_robot_cfg, SVANM2_ACTION_SCALE
 
 
-def m2_metal_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
+def svanm2_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
     cfg = make_velocity_env_cfg()
 
     cfg.sim.mujoco.ccd_iterations = 500
@@ -40,7 +40,7 @@ def m2_metal_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
     cfg.sim.mujoco.cone = "elliptic"
     cfg.sim.contact_sensor_maxmatch = 500
 
-    cfg.scene.entities = {"robot": get_m2_metal_robot_cfg(delayed=not play)}
+    cfg.scene.entities = {"robot": get_svanm2_robot_cfg(delayed=not play)}
 
     for sensor in cfg.scene.sensors or ():
         if sensor.name == "terrain_scan":
@@ -121,7 +121,7 @@ def m2_metal_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
 
     joint_pos_action = cfg.actions["joint_pos"]
     assert isinstance(joint_pos_action, JointPositionActionCfg)
-    joint_pos_action.scale = M2_ACTION_SCALE
+    joint_pos_action.scale = SVANM2_ACTION_SCALE
 
     cfg.viewer.body_name = "base"
     cfg.viewer.distance = 2.0
@@ -304,8 +304,8 @@ def m2_metal_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
     return cfg
 
 
-def m2_metal_flat_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
-    cfg = m2_metal_rough_env_cfg(play=play)
+def svanm2_flat_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
+    cfg = svanm2_rough_env_cfg(play=play)
 
     cfg.sim.njmax = 300
     cfg.sim.mujoco.ccd_iterations = 50

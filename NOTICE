@@ -6,7 +6,7 @@ This product is licensed under the Apache License, Version 2.0 (see LICENSE).
 --------------------------------------------------------------------------------
 Vendored assets
 --------------------------------------------------------------------------------
-The M2Metal robot description under xterra_mjlab/assets/m2_metal/ (MJCF + STL
+The SvanM2 robot description under xterra_mjlab/assets/svanm2/ (MJCF + STL
 meshes) is authored by xTerra Robotics and released under this repository's
 Apache-2.0 license.
 

@@ -30,6 +30,6 @@ include = ["xterra_mjlab*"]
 
 [tool.setuptools.package-data]
 "xterra_mjlab" = [
-  "assets/m2_metal/xml/*.xml",
-  "assets/m2_metal/meshes/*.STL",
+  "assets/svanm2/xml/*.xml",
+  "assets/svanm2/meshes/*.STL",
 ]
